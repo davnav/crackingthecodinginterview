@@ -1,3 +1,6 @@
+#Implement a function to check if a tree is balanced. For the purposes of this question,
+#a balanced tree is defined to be a tree such that no two leaf nodes differ in distance
+# from the root by more than one.
 #binary search tree insert node, traversal
 
 class Node:
@@ -88,53 +91,38 @@ def DFSFindElementPath(root,element,list1):
         list1.pop()
         
     return list1 
-          
-#Find element from Binary Search Tree    
-#breadth first search
-#not working
-def BFSFindElementPath(root,element,list1):
-    
+
+#check whether a tree is balanced or not !
+
+def isBalanced(root):
     current = root
-    found = False
-    list1 = list1
-    # if current != None:
-    #     if current.value == element:
-    #         list1.append(current.value)
-    #         found = True
-    #         return list1 
+    if current == None:
+        return
     
-    #     else:
+     
+    lh = height(current.left)
+    rh = height(curent.right)
     
-    children=[]
+    if (lh-rh) <=1 and (lh-rh) >= -1 and isBalanced(current.left) 
+        and isBalanced(current.left)
+        return True
     
-    if  current!= None:
+#find the height of a Tree
+
+def height(root):
+    current = root
+    if current == None
+        return 
+    elif:
+        lh = height(current.left) 
+        rh = height(current.right)
+        if lh > rh:
+            return lh+1
+        elif:
+            return rh+1
+    
         
-        children.append(current.left)
-        children.append(current.right)
-        nextchildren = []
-        # while children.pop() != None:
-        for child in children: 
-            nextchildren.append(child.left)
-            nextchildren.append(child.right)
-            if child != None: 
-                if child.value == element:
-                    list1.append(child.value)
-                    found = True
-                    print(True)
-                    return list1
-            
-        list1.append(child.value)
-        children = nextchildren
-        
-        BFSFindElementPath(child,element,children)
-            # else:
-            #     list1.pop()
-        
-        
-    return list1 
-             
-    
-    
+   
 root = Node(100)
 btree = BinarySearchTree(root)
 
@@ -156,4 +144,3 @@ btree.addtotree(99)
 list1=[]
 print(isElementFound(btree.root,99))
 print(DFSFindElementPath(btree.root,87,list1))
-print(BFSFindElementPath(btree.root,109,list1))
