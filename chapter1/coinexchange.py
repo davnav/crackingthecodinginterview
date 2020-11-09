@@ -4,7 +4,7 @@
 
 
 #*********Solution1************
-print("********greedy approch****soluion won't be accurate always***")
+# print("********greedy approch****soluion won't be accurate always***")
 #we will see how to use greedy approch which may be not accuate alwaysdatetime A combination of a date and a time. Attributes: ()
 
 #coins = { 1,5,6,9}
@@ -49,18 +49,20 @@ def minDenominations_wrong(coins,amount):
             
 coins = [5,1,6,9]
 
-print(minDenominations_wrong(coins,32))
+# print(minDenominations_wrong(coins,32))
 
 
 #************Solutions using Dynamic programming ************
-print("********Dynamic programming solution*******")
+# print("********Dynamic programming solution*******")
 
 min_DP_matrix = []
 
 def minDenominationsDP(coins,amount):
     coins.sort()
-    print(coins)
+    # print(coins)
     j=0
+    # if amount == 0:
+    #     return 0
     for i in coins:
     # for x in range(0,amount-1):
         row = []
@@ -69,26 +71,26 @@ def minDenominationsDP(coins,amount):
             
             if x < 1 :
                 row.append(0)
-            else:
-                if x ==1  :
+            elif x == 1 :
                     row.append(1)
-                else:
-                    if j ==0:
-                        row.append(x)
-                    else:
-                        if (x-i) >= 0:
-                           #formula for generating the table for minimum denominations 
-                           min_val = min1(row[x-i] + 1,min_DP_matrix[j-1][x])
+            elif j == 0:
+                    row.append(x)
+            elif (x-i) >= 0:
+                    #formula for generating the table for minimum denominations 
+                    min_val = min1(row[x-i] + 1,min_DP_matrix[j-1][x])
                            
-                           #append the row with minimum value that we got
-                           row.append(min_val)
-                        else:
-                            #if x-i <0 basically we can just copy the values from upper row
-                            min_val = min_DP_matrix[j-1][x]
-                            row.append(min_val)
+                    #append the row with minimum value that we got
+                    row.append(min_val)
+            else:
+                    #if x-i <0 basically we can just copy the values from upper row
+                    min_val = min_DP_matrix[j-1][x]
+                    row.append(min_val)
+                    
         min_DP_matrix.append(row)
         
         j += 1
+
+    return min_DP_matrix[j-1][amount]
 
 #function for finding the minimum from the passed values.
 def min1(x,y):
@@ -98,6 +100,6 @@ def min1(x,y):
         return y
     
         
-minDenominationsDP(coins,10)
+print(minDenominationsDP(coins,30))
 
 print(min_DP_matrix)
