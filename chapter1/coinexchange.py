@@ -32,11 +32,9 @@ def minDenominations_wrong(coins,amount):
     #But eventually we need to use 2 for loops
     
     for i in coins:
-        # for l in range(length_list-1,-1,-1):
         for coin_value in coins:
-            print(coin_value)
+            # print(coin_value)
             if current_amount >= coin_value:
-                # minDenominations(coins[0,l-1],amount)
             
                 denominations.append(coin_value)
                 current_amount = current_amount-coin_value
@@ -57,8 +55,49 @@ print(minDenominations_wrong(coins,32))
 #************Solutions using Dynamic programming ************
 print("********Dynamic programming solution*******")
 
+min_DP_matrix = []
+
 def minDenominationsDP(coins,amount):
-    for x in range(0,amount):
-        for i in coins:     
-            print(i)
-    raise NotImplementedError        
+    coins.sort()
+    print(coins)
+    j=0
+    for i in coins:
+    # for x in range(0,amount-1):
+        row = []
+        for x in range(0,amount+1):     
+            # print(i)
+            
+            if x < 1 :
+                row.append(0)
+            else:
+                if x ==1  :
+                    row.append(1)
+                else:
+                    if j ==0:
+                        row.append(x)
+                    else:
+                        if (x-i) >= 0:
+                           #formula for generating the table for minimum denominations 
+                           min_val = min1(row[x-i] + 1,min_DP_matrix[j-1][x])
+                           
+                           #append the row with minimum value that we got
+                           row.append(min_val)
+                        else:
+                            #if x-i <0 basically we can just copy the values from upper row
+                            min_val = min_DP_matrix[j-1][x]
+                            row.append(min_val)
+        min_DP_matrix.append(row)
+        
+        j += 1
+
+#function for finding the minimum from the passed values.
+def min1(x,y):
+    if x<y:
+        return x
+    else:
+        return y
+    
+        
+minDenominationsDP(coins,10)
+
+print(min_DP_matrix)
