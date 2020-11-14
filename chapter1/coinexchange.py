@@ -100,6 +100,6 @@ def min1(x,y):
         return y
     
         
-print(minDenominationsDP(coins,30))
+# print(minDenominationsDP(coins,30))
 
-print(min_DP_matrix)
+# print(min_DP_matrix)
