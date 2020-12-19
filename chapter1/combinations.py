@@ -22,8 +22,9 @@ def combinations(li,i,results,path1):
     if i == len(li):
         results.append(path1)
         return
-
-    pathCurrent=copy.copy(path1)
+    pathCurrent = []
+    for i in path1:
+        pathCurrent.append(i)
     pathCurrent.append(li[i])
     print(pathCurrent)
     
@@ -35,10 +36,10 @@ def combinations(li,i,results,path1):
     combinations(li,i+1,results,pathCurrent)
 
 
-li = [1,2,3]
+li = [1,2]
 i=0
-path=[]
-results=[[]]
+path=[1]
+results=[]
 
 combinations(li,i,results,path)
 
