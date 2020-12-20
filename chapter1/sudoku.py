@@ -12,6 +12,13 @@ board = [[0,0,0,2,6,0,7,0,1],
          [0,4,0,0,5,0,0,3,6],
          [7,0,3,0,1,8,0,0,0]]
 
+#solve is our function which is going to solve sudoku board and return board
+#it is recursive function as we need to take each blank cell and find it a valid choice
+#our choice is from number 1..9 
+#if choice is wrong , means IsvalidValue fuction returns "False",
+#we have blank that cell back to zero and choose another value until the function "IsvalidValue"
+#returns "True"
+
 def solve(col,row,board):
     if col >=9:
        # results.append(board[col][row])
@@ -31,8 +38,23 @@ def solve(col,row,board):
 
    
 def IsvalidValue(col,row,board):
-  
-    #sudoku rule 1:
+    
+    if board[col][row] != 0:
+        x = board[col][row]
+        
+        #choosen value is valid only if
+        # areaCheck , columnCheck and rowCheck passes
+        if areaCheck(col,row,x,board) and columnCheck(col,row,x,board) and rowCheck(col,row,x,board):
+            return True
+        else:
+            return False 
+
+
+        
+        
+# areaCheck function definition
+# x is value of the cell choosen
+#sudoku rule 1:
     #search for 3*3 area if find that value, it's invalid selection
     #eg: if col =2,row =2 
     #        0,1,2 are col values to search
@@ -41,23 +63,33 @@ def IsvalidValue(col,row,board):
     #       3*2 = 6 , 5 is below 6 , col area search should be 5,4,3
     #       3*2 = 6 , row is 7 , greater than 6, so the area for row should be 3*3=9 >(less) 8,7,6 
     #col-3
-    area =[[0,1,2],[3,4,5],[6,7,8]]
-    
-    if board[col][row] != 0:
-        x = board[col][row] 
+def areaCheck(col,row,x,board):
         # area set 1
         # column first 3 columns to end of row
         if col < 3 and col >=0  and row < 3 and row >= 0:
-               for i in range(0,2):
-                   for j in range(0,2):
-                       if board[i][j]== x:
-                           return False
+            for i in range(0,3):
+                for j in range(0,3):
+                    if board[i][j]== x:
+                        return False
+            return True
                         
          
         if col < 3 and col >= 0 and row < 6 and row >=3:
             
+            for i in range(0,3):
+                for j in range(3,6):
+                    if board[i][j]== x:
+                        return False
+            return True
+                       
         if col < 3 and col >= 0 and row < 9 and row >=6:
             
+                for i in range(0,3):
+                    for j in range(6,9):
+                        if board[i][j]== x:
+                           return False
+                
+                return True
         # area set 2 
         # column second set of 3 columns ( ie:col 3 to 5) to end of row   
         # column starts with index 0
@@ -65,26 +97,68 @@ def IsvalidValue(col,row,board):
         
         if col <6 and col >=3 and  row < 3 and row >= 0:
         
+                for i in range(3,6):
+                    for j in range(0,2):
+                        if board[i][j]== x:
+                           return False
+                
+                return True
+                       
         if col <6 and col >=3 and  row < 6 and row >= 3:
         
+                for i in range(3,6):
+                    for j in range(3,6):
+                        if board[i][j]== x:
+                           return False
+                
+                return True
         
         if col <6 and col >=3 and  row < 9 and row >= 6:
               
+                for i in range(3,6):
+                    for j in range(6,9):
+                        if board[i][j]== x:
+                           return False
+                
+                return True
             
         # area set 3 
         # column third set of 3 columns ( ie:col 6  to 8) to end of row   
         if col <9 and col >=6 and  row < 3 and row >= 0:
         
+                for i in range(6,9):
+                    for j in range(0,3):
+                        if board[i][j]== x:
+                           return False
+                
+                return True
+            
         if col <9 and col >=6 and  row < 6 and row >= 3:
         
-        
+                for i in range(6,9):
+                    for j in range(3,6):
+                        if board[i][j]== x:
+                           return False
+                
+                return True 
+            
         if col <9 and col >=6 and  row < 9 and row >= 6:
                   
+                for i in range(6,9):
+                    for j in range(6,9):
+                        if board[i][j]== x:
+                           return False
+                
+                return True
             
-            
-        for i in area
-        
-        
+
+#columnCheck function definition
+         
+def columnCheck(col,row,x,board):
+    raise NotImplementedError
+
+#rowCheck function definition
+def rowCheck(col,row,x,board):
+    raise NotImplementedError        
           
-            raise NotImplementedError
     
