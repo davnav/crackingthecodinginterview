@@ -16,7 +16,6 @@ def solve(col,row,board):
     if col >=9:
        # results.append(board[col][row])
         row = row+1
-        return 
    
     if row >=9:
         return board
@@ -45,6 +44,47 @@ def IsvalidValue(col,row,board):
     area =[[0,1,2],[3,4,5],[6,7,8]]
     
     if board[col][row] != 0:
+        x = board[col][row] 
+        # area set 1
+        # column first 3 columns to end of row
+        if col < 3 and col >=0  and row < 3 and row >= 0:
+               for i in range(0,2):
+                   for j in range(0,2):
+                       if board[i][j]== x:
+                           return False
+                        
+         
+        if col < 3 and col >= 0 and row < 6 and row >=3:
+            
+        if col < 3 and col >= 0 and row < 9 and row >=6:
+            
+        # area set 2 
+        # column second set of 3 columns ( ie:col 3 to 5) to end of row   
+        # column starts with index 0
+        # row index also starts with idex 0
+        
+        if col <6 and col >=3 and  row < 3 and row >= 0:
+        
+        if col <6 and col >=3 and  row < 6 and row >= 3:
+        
+        
+        if col <6 and col >=3 and  row < 9 and row >= 6:
+              
+            
+        # area set 3 
+        # column third set of 3 columns ( ie:col 6  to 8) to end of row   
+        if col <9 and col >=6 and  row < 3 and row >= 0:
+        
+        if col <9 and col >=6 and  row < 6 and row >= 3:
+        
+        
+        if col <9 and col >=6 and  row < 9 and row >= 6:
+                  
+            
+            
+        for i in area
+        
+        
           
             raise NotImplementedError
     
