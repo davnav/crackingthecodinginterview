@@ -12,43 +12,47 @@
 # if exists
 # Note: rat is allowed to jump 1 step to the right or 1 step to the down
 
-Maze = [[1,0,0,1],
+Maze = [[0,0,0,1],
         [1,1,0,0],
         [1,1,0,1],
         [0,1,1,1]]
 path = []
 def solve(row,col,Maze):
     
-    if row == 0 and col == 0 and Maze[row][col] == 1:
+    if  Maze[0][0] == 0  and row ==0 and col ==0:
+        print(path)
+        return False
+    elif Maze[0][0] == 1 and row == 0 and col == 0:
         path.append((row,col))
         
+    
     if mazeboundary(row,col):
-        print(path)
-        return True
+            print(path)
+            return True
     
     
         
     else:     
-        if col < 3: 
-        #take all choices to jump
+            if col < 3: 
+            #take all choices to jump
         
-        #first , let us take right jump
+            #first , let us take right jump
         
-            if Maze[row][col+1] == 1:
-                path.append((row,col+1))
-                if solve(row,col+1,Maze):
-                    return True
-                path.pop()
-        if row < 3: 
-        #second choice, take the down jump
-            if Maze[row+1][col] == 1:
-                path.append((row+1,col))
-                if solve(row+1,col,Maze):
-                    return True
-                path.pop()
+                if Maze[row][col+1] == 1:
+                    path.append((row,col+1))
+                    if solve(row,col+1,Maze):
+                        return True
+                    path.pop()
+            if row < 3: 
+                #second choice, take the down jump
+                if Maze[row+1][col] == 1:
+                    path.append((row+1,col))
+                    if solve(row+1,col,Maze):
+                        return True
+                    path.pop()
         
 
-    return False
+            return False
 
 
             
