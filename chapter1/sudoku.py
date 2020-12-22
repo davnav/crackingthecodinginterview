@@ -12,6 +12,11 @@ board = [[0,0,0,2,6,0,7,0,1],
          [0,4,0,0,5,0,0,3,6],
          [7,0,3,0,1,8,0,0,0]]
 
+# results = [[0]*9]*9
+
+# print(results)
+
+
 #solve is our function which is going to solve sudoku board and return board
 #it is recursive function as we need to take each blank cell and find it a valid choice
 #our choice is from number 1..9 
@@ -19,43 +24,50 @@ board = [[0,0,0,2,6,0,7,0,1],
 #we have blank that cell back to zero and choose another value until the function "IsvalidValue"
 #returns "True"
 
-def solve(col,row,board):
+def solve():
     
-    #base condition
-    #when column reach match max,
-    #we need to move to next row
-    if col >=9:
-       # results.append(board[col][row])
-        row = row+1
-        col=0
-   
-    #when row also become max, we can return board
-    if row >=9:
-        return board
-
-    for  value in range(1,10):
-       
-        if board[col][row] == 0:
-            board[col][row] = value
-            if IsvalidValue(col,row,board):
-                solve(col+1,row,board)
-            else:
-                board[col][row] = 0
-        else:
-            solve(col+1,row,board)
-       
-
-   
-def IsvalidValue(col,row,board):
+    emptycell = getemptycell()
     
-    if board[col][row] != 0:
-        x = board[col][row]
-        
+    if emptycell:
+   
+        row,col = emptycell 
+            # if solve(col,row,board):  
+        for  value in range(1,10):
+            # if board[row][col] == 0:
+                    if IsvalidValue(col,row,value):
+                        board[row][col] = value
+                        if solve():
+                            return True
+                        board[row][col] = 0
+    else:
+        print(board)
+        return True
+    
+    return False
+
+def getemptycell():
+    for i in range(9):
+        for j in range(9):
+            if board[i][j] == 0:
+                return (i,j)
+    return None     
+ 
+   
+def IsvalidValue(col,row,value):
+         
+        # if board[row][col] !=0:
+        #     return True
+        x =  value 
         #choosen value is valid only if
         # areaCheck , columnCheck and rowCheck passes
-        if areaCheck(col,row,x,board) and columnCheck(col,row,x,board) and rowCheck(col,row,x,board):
+        areaCheck_bool = areaCheck(col,row,x,board)
+        columnCheck_bool = columnCheck(col,row,x,board)
+        rowCheck_bool = rowCheck(col,row,x,board)
+        
+        if areaCheck_bool and columnCheck_bool and rowCheck_bool:
             return True
         else:
+            
             return False 
 
     
@@ -76,33 +88,34 @@ def IsvalidValue(col,row,board):
 def areaCheck(col,row,x,board):
         # area set 1
         # column first 3 columns to end of row
-        if col < 3 and col >=0  and row < 3 and row >= 0:
+        # if col < 3 and col >=0  and row < 3 and row >= 0:
+        if  0 <= col < 3 and 0 <= row < 3: 
             for i in range(0,3):
                 for j in range(0,3):
-                    if board[i][j]== x :
-                        if i == col and j == row:
-                            continue
+                    if board[j][i]== x :
                         return False
             return True
                         
          
-        if col < 3 and col >= 0 and row < 6 and row >=3:
-            
+        # if col < 3 and col >= 0 and row < 6 and row >=3:
+        
+        if 0 <= col < 3 and 3 <= row < 6:   
             for i in range(0,3):
                 for j in range(3,6):
-                    if board[i][j]== x :
-                        if i == col and j == row:
-                            continue
+                    if board[j][i]== x :
+                        # if j == col and i == row:
+                        #     continue
                         return False
             return True
                        
-        if col < 3 and col >= 0 and row < 9 and row >=6:
-            
+        # if col < 3 and col >= 0 and row < 9 and row >=6:
+        
+        if 0 <= col < 3 and 6 <= row < 9:    
                 for i in range(0,3):
                     for j in range(6,9):
-                        if board[i][j]== x :
-                           if i == col and j == row:
-                            continue 
+                        if board[j][i]== x :
+                        #    if j == col and i == row:
+                        #     continue 
                            return False
                 
                 return True
@@ -111,13 +124,14 @@ def areaCheck(col,row,x,board):
         # column starts with index 0
         # row index also starts with idex 0
         
-        if col <6 and col >=3 and  row < 3 and row >= 0:
-        
+        # if col <6 and col >=3 and  row < 3 and row >= 0:
+       
+        if 3 <= col < 6 and 0 <= row < 3: 
                 for i in range(3,6):
                     for j in range(0,2):
-                        if board[i][j]== x :
-                           if i == col and j == row:
-                            continue
+                        if board[j][i]== x :
+                        #    if j == col and i == row:
+                        #     continue
                            return False
                 
                 return True
@@ -126,9 +140,9 @@ def areaCheck(col,row,x,board):
         
                 for i in range(3,6):
                     for j in range(3,6):
-                        if board[i][j]== x:
-                            if i == col and j == row:
-                               continue
+                        if board[j][i]== x:
+                            # if j == col and i == row:
+                            #    continue
                             return False
                 
                 return True
@@ -137,9 +151,9 @@ def areaCheck(col,row,x,board):
               
                 for i in range(3,6):
                     for j in range(6,9):
-                        if board[i][j]== x :
-                           if i == col and j == row:
-                                continue
+                        if board[j][i]== x :
+                        #    if j == col and i == row:
+                        #         continue
                            return False
                 
                 return True
@@ -150,9 +164,9 @@ def areaCheck(col,row,x,board):
         
                 for i in range(6,9):
                     for j in range(0,3):
-                        if board[i][j]== x:
-                           if i == col and j == row:
-                            continue
+                        if board[j][i]== x:
+                        #    if j == col and i == row:
+                        #     continue
                            return False
                 
                 return True
@@ -161,9 +175,9 @@ def areaCheck(col,row,x,board):
         
                 for i in range(6,9):
                     for j in range(3,6):
-                        if board[i][j]== x :
-                            if i == col and j == row:
-                              continue
+                        if board[j][i]== x :
+                            # if j == col and i == row:
+                            #   continue
                             return False
                 
                 return True 
@@ -172,9 +186,9 @@ def areaCheck(col,row,x,board):
                   
                 for i in range(6,9):
                     for j in range(6,9):
-                        if board[i][j]== x :
-                           if i == col and j == row:
-                            continue
+                        if board[j][i]== x :
+                        #    if j == col and i == row:
+                        #     continue
                            return False
                 
                 return True
@@ -184,18 +198,18 @@ def areaCheck(col,row,x,board):
          
 def columnCheck(col,row,x,board):
     for i in range(0,9):
-        if board[col][i] == x and i != row :
+        if board[i][col] == x :
             return False
     return True
 
 #rowCheck function definition
 def rowCheck(col,row,x,board):
     for j in range(0,9):
-        if board[j][row] == x and j != col :
+        if board[row][j] == x :
             return False
         
     return True
           
 
-print(board)
-print(solve(0,0,board))    
+#print(board)
+print(solve() )   
