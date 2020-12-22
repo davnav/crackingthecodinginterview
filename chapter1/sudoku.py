@@ -12,9 +12,6 @@ board = [[0,0,0,2,6,0,7,0,1],
          [0,4,0,0,5,0,0,3,6],
          [7,0,3,0,1,8,0,0,0]]
 
-# results = [[0]*9]*9
-
-# print(results)
 
 
 #solve is our function which is going to solve sudoku board and return board
@@ -26,23 +23,42 @@ board = [[0,0,0,2,6,0,7,0,1],
 
 def solve():
     
+    #look for any emptycell
+    #if all empty cells solved, ideally we are done with solution
+    
     emptycell = getemptycell()
     
+    #got emptycell
     if emptycell:
    
         row,col = emptycell 
-            # if solve(col,row,board):  
+        
+        #try guessing values from 1..9
+        
         for  value in range(1,10):
-            # if board[row][col] == 0:
+        
+                    #validate when guessed value is really Valid
+                    #otherwise change the guessed value
                     if IsvalidValue(col,row,value):
+                        #if guessed value is valid, we can try placing it in the board
                         board[row][col] = value
+                        
+                        #try solving for the next emplty cell
+                        #calling solve function, recusrively solve next empty cells,
+                        # if last cell also solved, we can previous return call
                         if solve():
                             return True
+                        #otherwise backtrack
+                        #reverse the value we placed in the board
                         board[row][col] = 0
+    
+    #no more empty cell
+    #we can print the board and show the solution
     else:
         print(board)
         return True
     
+    #if no solution
     return False
 
 def getemptycell():
