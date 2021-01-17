@@ -8,7 +8,8 @@
 # n -> number
 
 i = 0
-exp = "1+3"
+v = 0
+exp = "1+3*4"
 
 def parse(e):
     a = parseE()
@@ -16,24 +17,31 @@ def parse(e):
       
 
 def parseE():
+    
+    global i,exp,v
     if i < len(exp):
-        
         parseT()
         if peek("+"):
             consume()
-            parseE()
-    return True    
+            # parseE()
+            v = v + parseE()
+        
+    return v   
 
 
 def parseT():
-    parseF()
+    global v
+    v = int(parseF())
     if peek("*"):
         consume()
-        parseT()
+        v = v * parseT()
+    return int(v)
 
 def parseF():
     if(isNumber(peek())):
-        consume()
+        value = consume()
+        return value
+    
         
 
 def peek(c = ''):
@@ -48,10 +56,15 @@ def peek(c = ''):
 
 def consume():
     global i
+    prev = i
     i += 1
+    return exp[prev]
 
 def isNumber(c):
-    return c.isdigit
+    try:
+        return c.isdigit
+    except:
+        print("parsing failed - converting to digit")
 
 print(parse(exp))
  
